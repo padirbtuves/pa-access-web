@@ -24,6 +24,24 @@ var users = require('./routes/users');
 
 var app = express();
 
+var passport = require('passport'),
+    GoogleStrategy = require('passport-google').Strategy;
+
+passport.use(new GoogleStrategy({
+        returnURL: 'http://www.example.com/auth/google/return',
+        realm: 'http://www.example.com/'
+    },
+    function (identifier, profile, done) {
+        User.findOrCreate({
+            openId: identifier
+        }, function (err, user) {
+            done(err, user);
+        });
+    }
+));
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
