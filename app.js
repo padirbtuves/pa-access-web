@@ -28,8 +28,8 @@ var passport = require('passport'),
     GoogleStrategy = require('passport-google').Strategy;
 
 passport.use(new GoogleStrategy({
-        returnURL: 'http://www.example.com/auth/google/return',
-        realm: 'http://www.example.com/'
+        returnURL: 'http://' + process.env.OPENSHIFT_GEAR_DNS + '/auth/google/return',
+        realm: 'http://' + process.env.OPENSHIFT_GEAR_DNS + '/'
     },
     function (identifier, profile, done) {
         User.findOrCreate({
@@ -39,7 +39,12 @@ passport.use(new GoogleStrategy({
         });
     }
 ));
-
+app.get('/auth/google', passport.authenticate('google'));
+app.get('/auth/google/return',
+    passport.authenticate('google', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    }));
 
 
 // view engine setup
