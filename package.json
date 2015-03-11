@@ -17,6 +17,6 @@
         "mongodb": "*",
         "monk": "*",
         "passport": "*",
-        "passport-google": "*"
+        "passport-google-plus": "*"
     }
 }

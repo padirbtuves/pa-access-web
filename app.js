@@ -24,27 +24,23 @@ var users = require('./routes/users');
 
 var app = express();
 
-var passport = require('passport'),
-    GoogleStrategy = require('passport-google').Strategy;
+var passport = require('passport');
+var GooglePlusStrategy = require('passport-google-plus');
 
-passport.use(new GoogleStrategy({
-        returnURL: 'http://' + process.env.OPENSHIFT_GEAR_DNS + '/auth/google/return',
-        realm: 'http://' + process.env.OPENSHIFT_GEAR_DNS + '/'
+passport.use(new GooglePlusStrategy({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET
     },
-    function (identifier, profile, done) {
-        User.findOrCreate({
-            openId: identifier
-        }, function (err, user) {
-            done(err, user);
-        });
+    function (tokens, profile, done) {
+        done(null, profile, tokens);
     }
 ));
-app.get('/auth/google', passport.authenticate('google'));
-app.get('/auth/google/return',
-    passport.authenticate('google', {
-        successRedirect: '/',
-        failureRedirect: '/login'
-    }));
+
+app.post('/auth/google/callback', passport.authenticate('google'), function (req, res) {
+    // Return user back to client 
+    res.send(req.user);
+});
+
 
 
 // view engine setup
