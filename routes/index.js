@@ -7,7 +7,8 @@ router.get('/', function (req, res, next) {
     collection.find({}, {}, function (err, docs) {
         res.render('index', {
             title: 'Express ' + process.env.FACEBOOK_KEY,
-            length: docs.length
+            length: docs.length,
+            user: req.user
         });
     });
 
