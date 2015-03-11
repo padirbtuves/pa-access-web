@@ -64,6 +64,9 @@ app.use(function (req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get('/auth/google', passport.authenticate('google', {
     scope: [
        'https://www.googleapis.com/auth/plus.login',
