@@ -6,7 +6,7 @@ router.get('/', function (req, res, next) {
     var collection = req.db.get("users");
     collection.find({}, {}, function (err, docs) {
         res.render('index', {
-            title: 'Express',
+            title: 'Express ' + process.env.OPENSHIFT_GEAR_DNS,
             length: docs.length
         });
     });
