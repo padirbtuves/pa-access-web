@@ -25,21 +25,20 @@ var users = require('./routes/users');
 var app = express();
 
 var passport = require('passport');
-var GooglePlusStrategy = require('passport-google-plus');
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
-passport.use(new GooglePlusStrategy({
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET
+passport.use(new GoogleStrategy({
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://paaccess-vincnetas.rhcloud.com/oauth2callback",
+        passReqToCallback: true
     },
-    function (tokens, profile, done) {
-        done(null, profile, tokens);
+    function (request, accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            return done(null, profile);
+        });
     }
 ));
-
-app.post('/auth/google/callback', passport.authenticate('google'), function (req, res) {
-    // Return user back to client 
-    res.send(req.user);
-});
 
 
 
@@ -64,6 +63,18 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 app.use('/users', users);
+
+app.get('/auth/google', passport.authenticate('google', {
+    scope: [
+       'https://www.googleapis.com/auth/plus.login',
+       'https://www.googleapis.com/auth/plus.profile.emails.read']
+}));
+
+app.get('/oauth2callback',
+    passport.authenticate('google', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    }));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
