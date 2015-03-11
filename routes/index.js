@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
         res.render('index', {
             title: 'Express ' + process.env.FACEBOOK_KEY,
             length: docs.length,
-            user: req.user
+            user: JSON.stringify(req.user)
         });
     });
 
