@@ -5,7 +5,7 @@
 var mongoose = require('mongoose');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-var config = require('config');
+var config = require('../config');
 var User = mongoose.model('User');
 
 /**
@@ -37,7 +37,17 @@ module.exports = new GoogleStrategy({
                     return done(err, user);
                 });
             } else {
-                return done(err, user);
+                user.name = profile.displayName;
+                user.email = profile.emails[0].value;
+                user.username = profile.username;
+                user.google = profile._json;
+
+                user.save(function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    return done(err, user);
+                });
             }
         });
     }

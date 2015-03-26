@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    Beberas {{user.email || "bebras"}}zberas
+    <a href="/auth/google">Login</a><br/>
+    <a href="/logout">Logout</a>
+{% endblock %}

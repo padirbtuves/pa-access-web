@@ -12,4 +12,17 @@ module.exports = function (app, passport) {
         function (req, res) {
             res.redirect('/');
         });
+
+    app.get('/logout', function (req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+    
+    app.use('/', function (req, res) {
+        return res.render("index", {
+            user: req.user
+        });
+    });
+
+
 }

@@ -1,13 +1,19 @@
 var mongoose = require('mongoose');
-var findOrCreate = require('mongoose-findorcreate')
-
-var UserSchema = new mongoose.Schema({
-    googleId: String,
+var Schema = mongoose.Schema;
+var UserSchema = new Schema({
+    google: {},
     username: String,
     password: String,
     email: String,
     gender: String,
     address: String
 });
-UserSchema.plugin(findOrCreate);
-var User = mongoose.model('User', UserSchema);
+
+UserSchema.statics = {
+    load: function (options, cb) {
+        options.select = options.select || 'name username';
+        var op = this.findOne(options.criteria, cb);
+    }
+}
+
+mongoose.model('User', UserSchema);
