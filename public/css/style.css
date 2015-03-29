@@ -1,0 +1,11 @@
+.login-bar {
+    display: inline-block;
+    width: 178px;
+    height: 60px;
+    background-image: url('/img/google-signin.png');
+    cursor: pointer;
+}
+
+.login-bar:hover {
+    background-image: url('/img/google-signin-hover.png');
+}

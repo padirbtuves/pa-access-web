@@ -5,8 +5,8 @@ var UserSchema = new Schema({
     username: String,
     password: String,
     email: String,
-    gender: String,
-    address: String
+    tagId: String,
+    phone: String
 });
 
 UserSchema.statics = {

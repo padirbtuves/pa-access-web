@@ -1,0 +1,58 @@
+<!doctype html>
+<html ng-app="paApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css">
+    <link rel="stylesheet" href="main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="/js/pa.js"></script>
+</head>
+
+<body ng-controller="TodoListController as todoList">
+
+    <div class="container">
+        <div class="col-lg-8 form-inline">
+            <div class="form-group">
+                <label for="userEmail">Email</label>
+                <input ng-model="user.email" type="text" class="form-control" id="userEmail" placeholder="email" ng-readonly="!editMode">
+            </div>
+            <div class=" form-group">
+                <label for="nfcId">Card Number</label>
+                <input ng-model="user.tagId" type="text" class="form-control" id="nfcId" placeholder="card number" ng-readonly="!editMode">
+            </div>
+            <button type="button " class="btn btn-default" aria-label="Left Align" ng-click="editMode = !editMode">
+                <span class="glyphicon" ng-class="{true: 'glyphicon-edit', false: 'glyphicon-ok'}[!editMode]" aria-hidden="true"></span>
+            </button>
+        </div>
+
+    </div>
+
+    <ul class="unstyled">
+        <li ng-repeat="user in users">
+            <span>{{user.email}}</span>
+        </li>
+    </ul>
+
+    <a href="/logout">Logout</a>
+
+    <h2>Todo</h2>
+    <div>
+        <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span> [ <a href="" ng-click="todoList.archive()">archive</a> ]
+        <ul class="unstyled">
+            <li ng-repeat="todo in todoList.todos">
+                <input type="checkbox" ng-model="todo.done">
+                <span class="done-{{todo.done}}">{{todo.text}}</span>
+            </li>
+        </ul>
+        <form ng-submit="todoList.addTodo()">
+            <input type="text" ng-model="todoList.todoText" size="30" placeholder="add new todo here">
+            <input class="btn-primary" type="submit" value="add">
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,7 +1,18 @@
-{% extends 'layout.html' %}
+<!doctype html>
+<html>
 
-{% block content %}
-    Beberas {{user.email || "bebras"}}zberas
-    <a href="/auth/google">Login</a><br/>
-    <a href="/logout">Logout</a>
-{% endblock %}
+<head>
+    <meta charset="utf-8">
+    <title>PA Access</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <div class="login-bar">
+        <img src="/img/google-signin.png"/>
+    </div>
+</body>
+
+</html>
