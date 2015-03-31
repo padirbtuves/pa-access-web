@@ -42,16 +42,21 @@ angular.module('paApp', [])
             $scope.user = user;
         });
 
-        $scope.update = function() {
+        $scope.update = function () {
             if ($scope.editMode) {
                 //save stuff
-                AccessService.updateUser($scope.user, function(data) {
+                AccessService.updateUser($scope.user, function (data) {
                     $scope.editMode = false;
                 });
             } else {
                 // enable editing
                 $scope.editMode = true;
             }
-        }
+        };
+
+        $scope.keyCallback = function ($event) {
+            //$event.preventDefault();
+            alert("Asd");
+        };
 
     }]);

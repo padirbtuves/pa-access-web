@@ -1,11 +1,28 @@
 .login-bar {
     display: inline-block;
-    width: 178px;
-    height: 60px;
-    background-image: url('/img/google-signin.png');
+    width: 132px;
+    height: 42px;
+    background-image: url('/img/White-signin_Medium_base_32dp.png');
     cursor: pointer;
 }
 
+.logo {
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+.logo-small {
+    padding: 10px;
+}
+
+.editable-field {
+    cursor: pointer;
+}
+
+.top-row {
+    height: 100px;
+}
+
 .login-bar:hover {
-    background-image: url('/img/google-signin-hover.png');
+    background-image: url('/img/White-signin_Medium_hover_32dp.png');
 }
