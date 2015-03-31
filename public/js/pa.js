@@ -1,5 +1,5 @@
 angular.module('paApp', [])
-    .factory('servisas', ['$http', function ($http) {
+    .factory('AccessService', ['$http', function ($http) {
         return {
             load: function (callback) {
                 $http.get('/app/user/all')
@@ -10,9 +10,17 @@ angular.module('paApp', [])
                         alert("error");
                     });
             },
-
             currentUser: function (callback) {
                 $http.get('/app/user/current')
+                    .success(function (data, status, header, config) {
+                        callback(data);
+                    })
+                    .error(function (data, status, header, config) {
+                        alert("error");
+                    });
+            },
+            updateUser: function (user, callback) {
+                $http.post('/app/user/update', user)
                     .success(function (data, status, header, config) {
                         callback(data);
                     })
@@ -22,50 +30,28 @@ angular.module('paApp', [])
             }
         }
     }])
-    .controller('TodoListController', ['$scope', 'servisas', function ($scope, servisas) {
-        var todoList = this;
+    .controller('AccessController', ['$scope', 'AccessService', function ($scope, AccessService) {
 
         $scope.editMode = false;
 
-        servisas.load(function (users) {
+        AccessService.load(function (users) {
             $scope.users = users;
         });
 
-        servisas.currentUser(function(user) {
+        AccessService.currentUser(function (user) {
             $scope.user = user;
         });
-        
-        todoList.todos = [
-            {
-                text: 'learn angular',
-                done: true
-            },
-            {
-                text: 'build an angular app',
-                done: false
-            }];
 
-        todoList.addTodo = function () {
-            todoList.todos.push({
-                text: todoList.todoText,
-                done: false
-            });
-            todoList.todoText = '';
-        };
+        $scope.update = function() {
+            if ($scope.editMode) {
+                //save stuff
+                AccessService.updateUser($scope.user, function(data) {
+                    $scope.editMode = false;
+                });
+            } else {
+                // enable editing
+                $scope.editMode = true;
+            }
+        }
 
-        todoList.remaining = function () {
-            var count = 0;
-            angular.forEach(todoList.todos, function (todo) {
-                count += todo.done ? 0 : 1;
-            });
-            return count;
-        };
-
-        todoList.archive = function () {
-            var oldTodos = todoList.todos;
-            todoList.todos = [];
-            angular.forEach(oldTodos, function (todo) {
-                if (!todo.done) todoList.todos.push(todo);
-            });
-        };
     }]);

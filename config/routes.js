@@ -32,6 +32,10 @@ module.exports = function (app, passport) {
         users.currentUser(req, res);
     });
     
+    app.post('/app/user/update', function(req, res) {
+        users.update(req, res);
+    });
+    
     app.get('/auth/nfc', function(req, res) {
         var all = [
             "2836153826",
