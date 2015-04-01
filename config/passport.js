@@ -23,9 +23,6 @@ module.exports = function (passport, config) {
                 _id: id
             }
         }, function (err, user) {
-            if (user.email == "vincnetas@gmail.com") {
-                user.email.admin = true;
-            }
             done(err, user)
         })
     })

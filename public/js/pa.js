@@ -34,10 +34,6 @@ angular.module('paApp', [])
 
         $scope.editMode = false;
 
-        AccessService.load(function (users) {
-            $scope.users = users;
-        });
-
         AccessService.currentUser(function (user) {
             $scope.user = user;
         });

@@ -4,7 +4,7 @@ var User = mongoose.model('User');
 module.exports = {
 
     loadAll: function (req, res) {
-        if (req.user.admin) {
+        if (req.user.email == "vincnetas@gmail.com") {
             User.find({}, function (err, users) {
                 if (!err) {
                     res.json(users);
