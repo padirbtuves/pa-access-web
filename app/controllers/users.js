@@ -4,13 +4,17 @@ var User = mongoose.model('User');
 module.exports = {
 
     loadAll: function (req, res) {
-        User.find({}, function (err, users) {
-            if (!err) {
-                res.json(users);
-            } else {
-                res.status(500).json(err);
-            }
-        })
+        if (req.user.admin) {
+            User.find({}, function (err, users) {
+                if (!err) {
+                    res.json(users);
+                } else {
+                    res.status(500).json(err);
+                }
+            });
+        } else {
+            res.status(500).json({});
+        }
     },
 
     currentUser: function (req, res) {
