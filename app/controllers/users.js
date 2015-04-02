@@ -32,7 +32,7 @@ module.exports = {
         User.findOne({
             tagId: query.id
         }, function(err, user) {
-            if (err) {
+            if (err || !user) {
                 res.json(result);
             } else {
                 result.id = user.tagId;
