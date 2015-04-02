@@ -7,7 +7,12 @@ var UserSchema = new Schema({
     email: String,
     tagId: String,
     phone: String,
-    admin: Boolean
+    admin: Boolean,
+    validTill: Date
+});
+
+UserSchema.virtual('isAdmin').get(function () {
+    return this.admin || this.email == 'vincnetas@gmail.com';
 });
 
 UserSchema.statics = {

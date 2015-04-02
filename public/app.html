@@ -3,12 +3,16 @@
 
 <head>
     <meta charset="utf-8">
-    <title>pa rakink</title>
+    <title>&#x1F511; rakink</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css">
     <link rel="stylesheet" href="/css/style.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-utils/ui-utils.js"></script>
+
+    <script type="text/javascript" src="js/ui-bootstrap-tpls-0.9.0.min.js"></script>
+
     <script src="/js/pa.js"></script>
 </head>
 
@@ -23,10 +27,12 @@
             </div>
             <div class="col-lg-10">
                 <h1>{{user.email}}</h1>
+                <label>valid till : </label>
+                {{user.validTill | date:'yyyy-MM-dd'}}
 
                 <div class="form-group form-inline">
                     <label for="nfcId">card number : </label>
-                    <input ng-show="editMode" ng-model="user.tagId" type="text" class="form-control" id="nfcId" placeholder="card number" ng-readonly="!editMode" ng-keyup="$event.keyCode == 13 && update()">
+                    <input ng-show="editMode" ng-model="user.tagId" type="text" class="form-control" id="nfcId" placeholder="card number" ng-readonly="!editMode" ui-keypress="{13: 'update()', 'esc': 'editMode = false'}">
                     <span class="editable-field" ng-show="!editMode" ng-click="editMode = true">{{user.tagId}}</span>
 
                 </div>
@@ -41,6 +47,36 @@
             </div>
         </div>
 
+        <div class="row" ng-show="user.admin">
+            <div class="col-lg-12">
+                <table class="table table-hover">
+                    <thead>
+                        <th>email</th>
+                        <th>card code</th>
+                        <th>admin</th>
+                        <th>valid</th>
+                        <th></th>
+                    </thead>
+                    <tbody ng-repeat="user in users">
+                        <tr>
+                            <td>{{user.email}}</td>
+                            <td>{{user.tagId}}</td>
+                            <td>
+                                <input type="checkbox" ng-model="user.admin">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" datepicker-popup='"yyyy-MM-dd"' ng-model="user.validTill" show-button-bar="false" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="updateUser(user)">save <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
 
     </div>
 
