@@ -37,19 +37,7 @@ module.exports = function (app, passport) {
     });
     
     app.get('/auth/nfc', function(req, res) {
-        var all = [
-            "2836153826",
-            "3630889794",
-            "3576372668",
-            "764286626",
-        ];
-        
-        var result = {};
-        result.id = req.query.id;
-        result.valid = all.indexOf(result.id) != -1;
-        result.till = "assad";
-        
-        res.json(result);
+        users.isSubscriptionValid(req, res);
     });
     
     app.use('/', function (req, res) {

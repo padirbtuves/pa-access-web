@@ -21,6 +21,27 @@ module.exports = {
         req.user.admin = req.user.isAdmin;
         res.json(req.user);
     },
+    
+    isSubscriptionValid: function(req, res) {
+        var query = req.query;
+        var result = {
+            id: query.id,
+            valid: false
+        };
+        
+        User.findOne({
+            tagId: query.id
+        }, function(err, user) {
+            if (err) {
+                res.json(result);
+            } else {
+                result.id = user.tagId;
+                result.valid = user.validTill > new Date();
+                result.till = user.validTill;
+                res.json(result);
+            }
+        });
+    },
 
     update: function (req, res) {
         var user = req.body;
