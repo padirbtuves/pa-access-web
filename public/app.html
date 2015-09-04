@@ -27,6 +27,7 @@
             </div>
             <div class="col-lg-10">
                 <h1>{{user.email}}</h1>
+                <h2>{{user.google.displayName}}</h2>
                 <label>valid till : </label>
                 {{user.validTill | date:'yyyy-MM-dd'}}
 
@@ -52,6 +53,7 @@
                 <table class="table table-hover">
                     <thead>
                         <th>email</th>
+                        <th>name</th>
                         <th>card code</th>
                         <th>admin</th>
                         <th>valid</th>
@@ -60,6 +62,7 @@
                     <tbody ng-repeat="user in users">
                         <tr>
                             <td>{{user.email}}</td>
+                            <td>{{user.google.displayName}}</td>
                             <td>{{user.tagId}}</td>
                             <td>
                                 <input type="checkbox" ng-model="user.admin">

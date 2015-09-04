@@ -1,3 +1,4 @@
+
 angular.module('paApp', ['ui.utils', 'ui.bootstrap'])
     .factory('AccessService', ['$http', function ($http) {
         return {
@@ -34,8 +35,6 @@ angular.module('paApp', ['ui.utils', 'ui.bootstrap'])
 
         $scope.editMode = false;
 
-
-
         AccessService.currentUser(function (user) {
             $scope.user = user;
             if (user.admin) {
@@ -46,8 +45,7 @@ angular.module('paApp', ['ui.utils', 'ui.bootstrap'])
         });
 
         $scope.updateUser = function (user) {
-            AccessService.updateUser(user, function (data) {
-            });
+            AccessService.updateUser(user, function (data) {});
         };
 
         $scope.update = function () {
