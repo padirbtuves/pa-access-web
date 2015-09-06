@@ -37,6 +37,7 @@ module.exports = function (app, passport) {
 
 
     // set views path, template engine and default layout
+    swig.setDefaults({ cache: false });
     app.engine('html', swig.renderFile);
     app.set('views', config.root + '/app/views');
     app.set('view engine', 'html');

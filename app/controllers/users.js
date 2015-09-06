@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Log = mongoose.model('Log');
 
 module.exports = {
 
@@ -21,24 +22,33 @@ module.exports = {
         req.user.admin = req.user.isAdmin;
         res.json(req.user);
     },
-    
-    isSubscriptionValid: function(req, res) {
+
+    isSubscriptionValid: function (req, res) {
         var query = req.query;
         var result = {
             id: query.id,
             valid: false
         };
-        
+
         User.findOne({
             tagId: query.id
-        }, function(err, user) {
+        }, function (err, user) {
             if (err || !user) {
                 res.json(result);
             } else {
                 result.id = user.tagId;
                 result.valid = user.validTill > new Date();
                 result.till = user.validTill;
-                res.json(result);
+
+                var log = new Log({
+                    who: user.email,
+                    when: new Date(),
+                    valid: result.valid
+                });
+
+                log.save(function (err) {
+                    res.json(result);
+                });
             }
         });
     },
